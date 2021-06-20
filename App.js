@@ -18,11 +18,16 @@ export default function App() {
     setRounds(noofRounds);
   };
 
+  const startNewGame = () => {
+    setUserNum('')
+    setRounds(0)
+  }
+
   let content = <StartGameScreen onStartGame={startGameHandler} />;
   if (userNum && rounds < 1) {
     content = <GamesScreen userChoice={userNum} onGameOver={gameOverHandler} />;
   } else if(rounds > 0){
-    content = <GameOver />;
+    content = <GameOver rounds={rounds} selectedNum={userNum} reset={startNewGame}/>;
   }
 
   return (
