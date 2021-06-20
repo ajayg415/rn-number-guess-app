@@ -12,18 +12,23 @@ import {
 import Card from "../components/Card";
 import Colors from "../constants/colors";
 import Input from "../components/Input";
+import NumberContainer from '../components/NumberContainer'
 
 const StartGameScreen = () => {
   const [enteredValue, setEnteredValue] = useState("");
   const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
-  const confirmedOut = confirmed ? (
-    <Text>Choosen Number: {selectedNumber}</Text>
-  ) : (
-    <Text></Text>
+
+  const confirmedOut = confirmed && (
+    <Card style={styles.summaryContainer}>
+      <Text>Choosen Number:</Text>
+      <NumberContainer>{selectedNumber}</NumberContainer>
+      <Button title='START GAME'/>
+    </Card>
   );
 
   const inputHandler = useCallback((val) => {
+    setConfirmed(false)
     setEnteredValue(val.replace(/[^0-9]/g, ""));
   }, []);
 
@@ -54,7 +59,6 @@ const StartGameScreen = () => {
       <View style={styles.screen}>
         <Text style={styles.title}>Start a New Game</Text>
         <Card style={styles.inputContainer}>
-          {confirmedOut}
           <Text>Select a Number</Text>
           <Input
             style={styles.input}
@@ -81,6 +85,7 @@ const StartGameScreen = () => {
             </View>
           </View>
         </Card>
+        {confirmedOut}
       </View>
     </TouchableWithoutFeedback>
   );
@@ -112,6 +117,10 @@ const styles = StyleSheet.create({
   input: {
     width: 50,
     textAlign: "center",
+  },
+  summaryContainer: {
+    marginTop: 20,
+    alignItems: 'center'
   },
 });
 
