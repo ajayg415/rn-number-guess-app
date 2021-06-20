@@ -6,6 +6,7 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  Alert,
 } from "react-native";
 
 import Card from "../components/Card";
@@ -14,9 +15,13 @@ import Input from "../components/Input";
 
 const StartGameScreen = () => {
   const [enteredValue, setEnteredValue] = useState("");
-  const [confirmed, setConfirmed] = useState(false)
+  const [confirmed, setConfirmed] = useState(false);
   const [selectedNumber, setSelectedNumber] = useState();
-  const confirmedOut = confirmed ? <Text>Choosen Number: {selectedNumber}</Text> : <Text></Text>;
+  const confirmedOut = confirmed ? (
+    <Text>Choosen Number: {selectedNumber}</Text>
+  ) : (
+    <Text></Text>
+  );
 
   const inputHandler = useCallback((val) => {
     setEnteredValue(val.replace(/[^0-9]/g, ""));
@@ -24,12 +29,15 @@ const StartGameScreen = () => {
 
   const resetInputHandler = useCallback(() => {
     setEnteredValue("");
-    setConfirmed(false)
+    setConfirmed(false);
   }, []);
 
   const confirmInputHandler = useCallback(() => {
-    const choosenNumber = parseInt(enteredValue)
-    if(choosenNumber === NaN || choosenNumber <= 0 || choosenNumber > 99){
+    const choosenNumber = parseInt(enteredValue);
+    if (isNaN(choosenNumber) || choosenNumber <= 0 || choosenNumber > 99) {
+      Alert.alert("Invalid Number", "Number Should be between 1 and 99", [
+        { text: "Okay", style: "destructive", onPress: resetInputHandler },
+      ]);
       return;
     }
     setConfirmed(true);
