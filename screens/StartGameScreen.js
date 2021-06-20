@@ -1,32 +1,53 @@
-import React from "react";
-import { View, StyleSheet, Text, Button } from "react-native";
+import React, { useState, useCallback } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Button,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 
 import Card from "../components/Card";
 import Colors from "../constants/colors";
 import Input from "../components/Input";
 
 const StartGameScreen = () => {
+  const [enteredValue, setEnteredValue] = useState("");
+
+  const inputHandler = useCallback((val) => {
+    setEnteredValue(val.replace(/[^0-9]/g, ""));
+  }, []);
+
   return (
-    <View style={styles.screen}>
-      <Text style={styles.title}>Start a New Game</Text>
-      <Card style={styles.inputContainer}>
-        <Text>Select a Number</Text>
-        <Input
-          style={styles.input}
-          autoCorrect={false}
-          keyboardType="number-pad"
-          maxLength={2}
-        />
-        <View style={styles.btnContainer}>
-          <View style={styles.button}>
-            <Button color={Colors.accent} title="Reset" onPress={() => {}} />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.screen}>
+        <Text style={styles.title}>Start a New Game</Text>
+        <Card style={styles.inputContainer}>
+          <Text>Select a Number</Text>
+          <Input
+            style={styles.input}
+            autoCorrect={false}
+            keyboardType="number-pad"
+            maxLength={2}
+            onChangeText={inputHandler}
+            value={enteredValue}
+          />
+          <View style={styles.btnContainer}>
+            <View style={styles.button}>
+              <Button color={Colors.accent} title="Reset" onPress={() => {}} />
+            </View>
+            <View style={styles.button}>
+              <Button
+                color={Colors.primary}
+                title="Confirm"
+                onPress={() => {}}
+              />
+            </View>
           </View>
-          <View style={styles.button}>
-            <Button color={Colors.primary} title="Confirm" onPress={() => {}} />
-          </View>
-        </View>
-      </Card>
-    </View>
+        </Card>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
