@@ -9,8 +9,9 @@ const GameOver = ({ rounds, reset, selectedNum }) => {
       <BodyText>Game is Over</BodyText>
       <Image
         style={styles.image}
-        source={require("../assets/success.png")}
+        source={require("../assets/success.jpg")}
         resizeMethod="scale"
+        fadeDuration={2000}
       />
       <BodyText>Number of rounds: {rounds}</BodyText>
       <BodyText>Selected Number: {selectedNum}</BodyText>
