@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color:'#000',
         fontSize: 18,
+        fontFamily: 'ubuntu-bold'
     }
 });
 
